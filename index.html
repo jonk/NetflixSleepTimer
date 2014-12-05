@@ -2,16 +2,34 @@
 <html>
 <head>
   
-    <title>My First Plugin</title>
+    <title>Sleep Timer</title>
     <script src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 
 <body>
-    <button>
-        This is a Javascript Test
-    </button>
+    <div>
+        <p id="title">Pick how long you want to watch before going to sleep.</p>
+        <button id="15_min">
+            15 Min
+        </button>
+        <button id="30_min">
+            30 Min
+        </button>
+        <button id="60_min">
+            1 Hour
+        </button>
+    </div>
 
-    <p id="demo"></p>
+    <br>
+
+    <div id="timer">0:00</div>
+
+    <div>
+        <button id="start_button">
+            Start!
+        </button>
+    </div>
 
 </body>
 
