@@ -1,21 +1,26 @@
 var timeLeft = 0;
 
 function updateTimer(time) {
-    timer = document.getElementById('timer');
-    timer.innerHTML = time + ":00";
-
     timeLeft = time * 60;
 }
 
 function handleTimer() {
-    setInterval(function() {startTiming()}, 1000);
+    if (timeLeft > 0) {
+        chrome.extension.sendRequest({timeLeft:timeLeft});
+    }
 
 }
 
-function startTiming() {
-    timeLeft = timeLeft - 1;
-    document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + timeLeft % 60
-}
+// function startTiming() {
+//     timeLeft = timeLeft - 1;
+//     document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + timeLeft % 60
+// }
+
+chrome.extension.onRequest.addListener(
+    function(request, sender, sendResponse) {
+        console.log("laucher received", request.remainingSecs);
+    }
+);
 
 function main() {
 
