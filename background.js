@@ -20,8 +20,9 @@ chrome.runtime.onInstalled.addListener(function() {
 var timer;
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
   clearTimeout(timer);
+  var remainingSecs = request.timeLeft;
   (function() {
-    var remainingSecs = timeLeft - 1;
+    remainingSecs = remainingSecs - 1;
     chrome.extension.sendRequest({remainingSecs:remainingSecs});
     if (remainingSecs > 0) {
       timer = setTimeout(arguments.callee, 1000);
