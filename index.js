@@ -24,7 +24,7 @@ chrome.extension.onRequest.addListener(
 
 function main() {
 
-    document.getElementById('15_min').addEventListener('click', function() { updateTimer(10) });
+    document.getElementById('15_min').addEventListener('click', function() { updateTimer(900) });
     document.getElementById('30_min').addEventListener('click', function() { updateTimer(1800) });
     document.getElementById('60_min').addEventListener('click', function() { updateTimer(3600) });
     document.getElementById('start_button').addEventListener('click', handleTimer);
