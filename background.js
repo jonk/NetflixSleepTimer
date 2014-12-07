@@ -8,6 +8,9 @@ chrome.runtime.onInstalled.addListener(function() {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: { urlContains: 'netflix' },
+          }),
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { urlContains: 'sleepytimes'},
           })
         ],
         // And shows the extension's page action.
@@ -26,7 +29,21 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     chrome.extension.sendRequest({remainingSecs:remainingSecs});
     if (remainingSecs > 0) {
       timer = setTimeout(arguments.callee, 1000);
+    } else {
+      doInCurrentTab( function(tab) { 
+          chrome.tabs.update(tab.id, { url: "sleepytimes.html", active: true } );
+      });
     }
   })();
 });
+
+function doInCurrentTab(tabCallback) {
+    chrome.tabs.query(
+        { currentWindow: true, active: true },
+        function (tabArray) { 
+            tabCallback(tabArray[0]); 
+        }
+    );
+}
+
 
