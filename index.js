@@ -2,7 +2,12 @@ var timeLeft = 0;
 
 function updateTimer(time) {
     timeLeft = time;
-    document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + timeLeft % 60;
+    document.getElementById('timer').innerHTML = pad(Math.floor(timeLeft / 60), 2) + ":" + pad(timeLeft % 60, 2);
+}
+
+function pad(num, size) {
+    var s = "0" + num;
+    return s.substr(s.length-size);
 }
 
 function handleTimer() {
