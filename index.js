@@ -1,7 +1,8 @@
 var timeLeft = 0;
 
 function updateTimer(time) {
-    timeLeft = time * 60;
+    timeLeft = time;
+    document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + timeLeft % 60;
 }
 
 function handleTimer() {
@@ -18,16 +19,19 @@ function handleTimer() {
 
 chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse) {
+        timeLeft = request.remainingSecs;
+        updateTimer(timeLeft);
         console.log("laucher received", request.remainingSecs);
     }
 );
 
 function main() {
 
-    document.getElementById('15_min').addEventListener('click', function() { updateTimer(15) });
-    document.getElementById('30_min').addEventListener('click', function() { updateTimer(30) });
-    document.getElementById('60_min').addEventListener('click', function() { updateTimer(60) });
+    document.getElementById('15_min').addEventListener('click', function() { updateTimer(900) });
+    document.getElementById('30_min').addEventListener('click', function() { updateTimer(1800) });
+    document.getElementById('60_min').addEventListener('click', function() { updateTimer(3600) });
     document.getElementById('start_button').addEventListener('click', handleTimer);
+
 
 }
 
