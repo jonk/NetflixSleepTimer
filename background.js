@@ -20,19 +20,25 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
+var keep_time = true;
+
 var timer;
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
   clearTimeout(timer);
   var remainingSecs = request.timeLeft;
+  keep_time = (remainingSecs != -1);
+  console.log(keep_time);
   (function() {
+    if (keep_time) {
     remainingSecs = remainingSecs - 1;
     chrome.extension.sendRequest({remainingSecs:remainingSecs});
-    if (remainingSecs > 0) {
-      timer = setTimeout(arguments.callee, 1000);
-    } else {
-      doInCurrentTab( function(tab) { 
-          chrome.tabs.update(tab.id, { url: "sleepytimes.html", active: true } );
-      });
+      if (remainingSecs > 0) {
+          timer = setTimeout(arguments.callee, 1000);
+      } else {
+        doInCurrentTab( function(tab) { 
+            chrome.tabs.update(tab.id, { url: "sleepytimes.html", active: true } );
+        });
+      }
     }
   })();
 });

@@ -12,6 +12,7 @@ function pad(num, size) {
 
 function handleTimer() {
     chrome.extension.sendRequest({timeLeft:timeLeft});
+    document.getElementById('selectors').style.visibility = "hidden";
 }
 
 chrome.extension.onRequest.addListener(
@@ -22,12 +23,21 @@ chrome.extension.onRequest.addListener(
     }
 );
 
+function handleReset() {
+    document.getElementById('selectors').style.visibility = "visible";
+    document.getElementById('timer').innerHTML = "";
+    chrome.extension.sendRequest({timeLeft:-1});
+    timeLeft = 0;
+}
+
 function main() {
 
     document.getElementById('15_min').addEventListener('click', function() { updateTimer(900) });
     document.getElementById('30_min').addEventListener('click', function() { updateTimer(1800) });
     document.getElementById('60_min').addEventListener('click', function() { updateTimer(3600) });
+
     document.getElementById('start_button').addEventListener('click', handleTimer);
+    document.getElementById('reset_button').addEventListener('click', handleReset);
 }
 
 // Add event listeners once the DOM has fully loaded by listening for the
